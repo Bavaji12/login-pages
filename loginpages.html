@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal</title>
+    <style>
+        /* Mobile-First CSS */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden; /* Prevent horizontal scroll on mobile */
+        }
+
+        /* Animated Bubbles Background */
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 10s linear infinite;
+            pointer-events: none; /* Don't interfere with clicks */
+        }
+
+        /* Generate multiple bubbles with varying sizes and positions */
+        .bubble:nth-child(1) { width: 20px; height: 20px; left: 10%; animation-delay: 0s; }
+        .bubble:nth-child(2) { width: 30px; height: 30px; left: 20%; animation-delay: 2s; }
+        .bubble:nth-child(3) { width: 15px; height: 15px; left: 30%; animation-delay: 4s; }
+        .bubble:nth-child(4) { width: 25px; height: 25px; left: 40%; animation-delay: 6s; }
+        .bubble:nth-child(5) { width: 18px; height: 18px; left: 50%; animation-delay: 8s; }
+        .bubble:nth-child(6) { width: 22px; height: 22px; left: 60%; animation-delay: 10s; }
+        .bubble:nth-child(7) { width: 28px; height: 28px; left: 70%; animation-delay: 12s; }
+        .bubble:nth-child(8) { width: 16px; height: 16px; left: 80%; animation-delay: 14s; }
+
+        /* Keyframes for animations */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) translateX(0px); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) translateX(50px); opacity: 0; }
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background-color: rgba(0, 123, 255, 0.9); /* Semi-transparent for overlay effect */
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .navbar nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .navbar button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 5px;
+            font-size: 0.9rem;
+        }
+
+        /* Main Content */
+        .container {
+            flex: 1;
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10; /* Ensure content is above background */
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.95); /* Semi-transparent white for contrast */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, select {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        button[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #218838;
+        }
+
+        .toggle-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .toggle-link button {
+            background: none;
+            border: none;
+            color: #007bff;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: rgba(51, 51, 51, 0.9); /* Semi-transparent for overlay */
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Tablet and Desktop Enhancements */
+        @media (min-width: 768px) {
+            .bubble:nth-child(9) { width: 24px; height: 24px; left: 90%; animation-delay: 16s; } /* Add more bubbles */
+            .bubble:nth-child(10) { width: 19px; height: 19px; left: 5%; animation-delay: 18s; }
+            @keyframes float { /* Faster on larger screens */
+                0% { transform: translateY(100vh) translateX(0px); opacity: 0; }
+                10% { opacity: 1; }
+                90% { opacity: 1; }
+                100% { transform: translateY(-100px) translateX(100px); opacity: 0; }
+            }
+            .navbar h1 {
+                font-size: 1.5rem;
+            }
+            .container {
+                max-width: 600px;
+            }
+            .form-container {
+                padding: 30px;
+            }
+            button[type="submit"] {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .navbar nav {
+                gap: 20px;
+            }
+            .container {
+                max-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Bubbles -->
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+
+    <div id="navbar"></div>
+    <div class="container">
+        <div id="content"></div>
+    </div>
+    <div id="footer"></div>
+
+    <script>
+        // Reusable Navbar Component
+        function createNavbar() {
+            return `
+                <div class="navbar">
+                    <h1>Student Portal</h1>
+                    <nav>
+                        <button onclick="showLogin()">Login</button>
+                        <button onclick="showRegister()">Register</button>
+                    </nav>
+                </div>
+            `;
+        }
+
+        // Reusable Footer Component
+        function createFooter() {
+            return `
+                <div class="footer">
+                    <p>&copy; 2023 Student Portal. All rights reserved.</p>
+                </div>
+            `;
+        }
+
+        // Login Page Content
+        function createLoginPage() {
+            return `
+                <div class="form-container">
+                    <h2>Student Login</h2>
+                    <form id="loginForm">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                        
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                        
+                        <button type="submit">Login</button>
+                    </form>
+                    <div class="toggle-link">
+                        <button onclick="showRegister()">Don't have an account? Register here</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Registration Page Content
+        function createRegisterPage() {
+            return `
+                <div class="form-container">
+                    <h2>Student Registration</h2>
+                    <form id="registerForm">
+                        <label for="name">Full Name:</label>
+                        <input type="text" id="name" name="name" required>
+                        
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                        
+                        <label for="studentId">Student ID:</label>
+                        <input type="text" id="studentId" name="studentId" required>
+                        
+                        <label for="course">Course:</label>
+                        <select id="course" name="course" required>
+                            <option value="">Select Course</option>
+                            <option value="cs">Computer Science</option>
+                            <option value="math">Mathematics</option>
+                            <option value="eng">Engineering</option>
+                        </select>
+                        
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                        
+                        <label for="confirmPassword">Confirm Password:</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required>
+                        
+                        <button type="submit">Register</button>
+                    </form>
+                    <div class="toggle-link">
+                        <button onclick="showLogin()">Already have an account? Login here</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Function to show Login page
+        function showLogin() {
+            document.getElementById('content').innerHTML = createLoginPage();
+            attachFormHandlers();
+        }
+
+        // Function to show Registration page
+        function showRegister() {
+            document.getElementById('content').innerHTML = createRegisterPage();
+            attachFormHandlers();
+        }
+
+        // Attach form submission handlers
+        function attachFormHandlers() {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Login successful! (Frontend demo - no backend)');
+                });
+            }
+
+            if (registerForm) {
+                registerForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const password = document.getElementById('password').value;
+                    const confirmPassword = document.getElementById('confirmPassword').value;
+                    if (password !== confirmPassword) {
+                        alert('Passwords do not match!');
+                        return;
+                    }
+                    alert('Registration successful! (Frontend demo - no backend)');
+                });
+            }
+        }
+
+        // Initialize the page
+        document.getElementById('navbar').innerHTML = createNavbar();
+        document.getElementById('footer').innerHTML = createFooter();
+        showLogin(); // Default to login page
+    </script>
+</body>
+</html>
